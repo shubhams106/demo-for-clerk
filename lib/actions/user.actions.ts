@@ -13,6 +13,7 @@ type CreateUserParams = {
   photo: string;
 };
 export async function createUser(user: CreateUserParams) {
+  console.log("createUser function called");
   try {
     await connectToDatabase();
 

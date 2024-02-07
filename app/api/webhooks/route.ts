@@ -13,7 +13,7 @@ export async function POST(req: Request) {
       "Please add WEBHOOK_SECRET from Clerk Dashboard to .env or .env.local"
     );
   }
-
+  console.log("i rannnnnnnnnnnnnnnnnnnnnnnnn", WEBHOOK_SECRET);
   // Get the headers
   const headerPayload = headers();
   const svix_id = headerPayload.get("svix-id");
@@ -54,7 +54,10 @@ export async function POST(req: Request) {
   const { id } = evt.data;
   const eventType = evt.type;
 
+  console.log(evt, "evt");
+
   if (eventType === "user.created") {
+    console.log("yes i am being created");
     const { id, email_addresses, image_url, first_name, last_name, username } =
       evt.data;
 
@@ -68,6 +71,8 @@ export async function POST(req: Request) {
     };
 
     const newUser = await createUser(user);
+
+    console.log(newUser, "newUsercreated in mongo");
 
     if (newUser) {
       await clerkClient.users.updateUserMetadata(id, {
